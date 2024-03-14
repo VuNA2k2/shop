@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@elastic/elasticsearch": "^8.12.2",
+    "elasticsearch": "^16.7.3",
+    "mongodb": "^6.5.0",
+    "t": "^0.5.1"
+  }
+}
