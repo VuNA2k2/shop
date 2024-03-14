@@ -34,5 +34,6 @@ urlpatterns = [
     path('api/v1/', include("category.urls")),
     path('api/v1/', include("cart.urls")),
     path('api/v1/', include("mobile.urls")),
+    path('api/v1/', include("clothe.urls")),
     path('api/v1/search/', include("search.urls")),
 ]

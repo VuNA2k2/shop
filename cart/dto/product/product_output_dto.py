@@ -3,6 +3,8 @@ from rest_framework import serializers
 from book.dto.book.book_output_dto import BookOutputDto
 from book.models import Book
 from cart.models import Product, ProductType, ProductRefCart
+from clothe.dto.clothe.clothe_output_dto import ClotheOutputDto
+from clothe.models import Clothe
 from mobile.dto.mobile_output_dto import MobileOutputDto
 from mobile.models import Mobile
 
@@ -19,6 +21,8 @@ class ProductOutputDto(serializers.ModelSerializer):
             return BookOutputDto(Book.objects.get(id=obj.product_id)).data
         elif obj.type == ProductType.MOBILE.value:
             return MobileOutputDto(Mobile.objects.get(id=obj.product_id)).data
+        elif obj.type == ProductType.CLOTHE.value:
+            return ClotheOutputDto(Clothe.objects.get(id=obj.product_id)).data
 
 
 class ProductRefCartOutputDto(serializers.ModelSerializer):

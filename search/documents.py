@@ -1,6 +1,7 @@
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
 from book.models import Book, Author, Category, Publisher, PublisherRefBook
+from clothe.models import Clothe
 from mobile.models import Mobile
 
 
@@ -139,6 +140,36 @@ class MobileDocument(Document):
     def get_instances_from_related(self, related_instance):
         if isinstance(related_instance, Category):
             return related_instance.mobile_category.all()
+
+    def prepare(self, instance):
+        data = super().prepare(instance)
+        data['category'] = {
+            'id': instance.category_id.id,
+            'name': instance.category_id.name,
+            'description': instance.category_id.description
+        }
+        return data
+
+
+@registry.register_document
+class ClotheDocument(Document):
+    category = fields.ObjectField(properties={
+        'id': fields.IntegerField(),
+        'name': fields.TextField(),
+        'description': fields.TextField()
+    })
+
+    class Index:
+        name = 'clothes'
+
+    class Django:
+        model = Clothe
+        fields = ['id', 'name', 'description', 'brand', 'model']
+        related_models = [Category]
+
+    def get_instances_from_related(self, related_instance):
+        if isinstance(related_instance, Category):
+            return related_instance.clothe_category.all()
 
     def prepare(self, instance):
         data = super().prepare(instance)
